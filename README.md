@@ -2,28 +2,28 @@
 
 This project summarises efforts to extract raw songplay data and log data, transform those and load them into a relational database consisted of 5 tables: 1 fact table (songplays) and 4 dimension tables (songs, artists, users, and datetime). 
 
-### Files
+# Files
 
-# data
+### data
 Folder containing all of the raw songplay and log data.
 
-# sql_queries.py
+### sql_queries.py
 Contains all of the necessary queries for creating tables and inserting data into them.
 
-# create_tables.py
+### create_tables.py
 Python script that resets the database by droping any existing tables and then creating them again with no rows.
 
-# test.ipynb
+### test.ipynb
 Jupyter Notebook aimed at testing tables creation and data insertion.
 
-# etl.py
+### etl.py
 Main Python script for extracting raw data, transforming certain columns and loading them into the relational database.
 
-# etl.ipynb 
+### etl.ipynb 
 Jupyter Notebook with the purpose of being a draft file before summing up code into etl.py.
 
 
-## How to run
+# How to run
 
 Clone the remote repository:
 ```
