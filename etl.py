@@ -12,7 +12,7 @@ def process_song_file(cur, filepath):
     # insert song record
     song_data = list(df[['song_id', 'title', 'artist_id', 'year', 'duration']].values[0])
     cur.execute(song_table_insert, song_data)
-    
+
     # insert artist record
     artist_data = list(df[['artist_id', 'artist_name', 'artist_location', 'artist_latitude', 'artist_longitude']].values[0])
     cur.execute(artist_table_insert, artist_data)
@@ -27,7 +27,7 @@ def process_log_file(cur, filepath):
 
     # convert timestamp column to datetime
     df['t'] = df['ts'].apply(lambda x: datetime.fromtimestamp(x/1000.0))
-    
+
     # insert time data records
     time_data = {'timestamp': df['t'],
              'year': df['t'].dt.year,
@@ -37,7 +37,7 @@ def process_log_file(cur, filepath):
              'week_day': df['t'].dt.weekday,
              'week_year': df['t'].dt.week,
             }
-    time_df = pd.DataFrame.from_dict(time_data) 
+    time_df = pd.DataFrame.from_dict(time_data)
 
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))
@@ -52,18 +52,18 @@ def process_log_file(cur, filepath):
 
     # insert songplay records
     for index, row in df.iterrows():
-        
+
         # get songid and artistid from song and artist tables
         cur.execute(song_select, (row.song, row.artist, row.length))
         results = cur.fetchone()
-        
+
         if results:
             songid, artistid = results
         else:
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
+        songplay_data = (row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
 
